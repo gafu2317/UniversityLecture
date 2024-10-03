@@ -1,0 +1,43 @@
+(このファイルは Makefile の説明)
+
+※Makefile には，Shift_JISの日本語を書かないこと．
+
+後半の部分に書かれているように，3つのターゲットを Makefile に追加する．
+
+---
+.SUFFIXES: .java .class
+
+JAVAC	= javac
+JAVA	= java
+
+SRC	= $(wildcard *.java)
+CLASS	= $(SRC:.java=.class)
+PROGRAM	= $(shell pwd)
+
+all: $(CLASS)
+
+test:;
+	@echo 今回は make test は使用できません
+	@echo kada1から3をターゲットとする規則を用いてください
+
+kadai1: 
+	@echo ターゲットkadai1: に続けて依存するクラスファイルを書く
+	@echo javaコマンドとリダイレクト
+	@echo diffコマンド
+
+kadai2: 
+	@echo ターゲットkadai2: に続けて依存するクラスファイルを書く
+	@echo java コマンド(チェックまで自動化するならばリダイレクトやdiffコマンドも)
+
+kadai3: 
+	@echo ターゲットkadai3: に続けて依存するクラスファイルを書く
+	@echo java コマンド(チェックまで自動化するならばリダイレクトやdiffコマンドも)
+
+$(CLASS): $(SRC)
+	$(JAVAC) $(SRC)
+
+#.java.class:
+#	$(JAVAC) $<
+
+clean:;	\rm -f *.class
+---

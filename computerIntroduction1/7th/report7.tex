@@ -1,0 +1,35 @@
+\documentclass{jsarticle}
+\usepackage[dvips]{graphicx}
+\title{コンピューター入門　第７回課題}
+\author{福富隆大　学籍番号３５７１４１２１}
+\date{２０２３年１１月９日}
+\parindent = 0pt
+\begin{document}
+\maketitle 
+\section{課題４番目}
+(ア)球をsphereという関数で描画した。球か円かを判別するためにnoStroke()を用いた。\\
+(イ)rotateYだと横に回転したが、rotateXだと縦に回転した。\\
+\section{課題５番目}
+(ア)text関数のｘ座標を１００にするとテキストが左に移動した\\
+textsize関数を１００にするとテキストが大きくなった\\
+(イ)text関数の上にfill(255,0,0)を追加し文字を赤くした
+\section{課題６番目}
+(ア)初期条件を１０に変えると、上側に円が増えた\\
+(イ)終了条件を８００に変えると、下側に円が増えた\\
+\section{課題８番目}
+int y = 0;\\
+int dy = 5;\\
+void setup(){\\
+size(400, 400);\\
+background(0);\\
+stroke(255);\\
+}\\
+void draw(){\\
+background(0);\\
+ellipse(200,y,50,50);\\
+y = y + dy;\\
+if (y == 400) {\\
+dy = 0;\\
+}\\
+}
+\end{document}

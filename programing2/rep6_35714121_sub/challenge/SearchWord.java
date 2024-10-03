@@ -1,0 +1,1 @@
+// SearchWordクラスを書く
