@@ -1,0 +1,15 @@
+(このファイルは，sample23.sh の説明)
+
+※sample23.sh には，Shift_JISの日本語を書かないこと．改行コードをLFとすること．
+
+---
+#!/bin/sh
+
+for i in 001 002 ; do
+	echo ${i}を使って何かをする
+done
+---
+
+sample23.sh は参考用．これを実行しても答えにはならない．
+最初の一度だけ chmod +x sample23.sh による実行権限の付与が必要．
+

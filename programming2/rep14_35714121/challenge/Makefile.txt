@@ -1,0 +1,28 @@
+(このファイルは Makefile の説明)
+
+※Makefile には，Shift_JISの日本語を書かないこと．
+
+ターゲットtestの部分に書かれているように，
+各例題について検証する，適切な規則を整備する．
+
+---
+.SUFFIXES: .java .class
+
+JAVAC	= javac
+JAVA	= java
+
+SRC	= $(wildcard *.java)
+CLASS	= $(SRC:.java=.class)
+PROGRAM	= $(shell pwd)
+
+all: $(CLASS)
+
+test:;
+	java PrimTester wugraph/wug0.txt
+	@echo 各例題について適切に検証すること
+
+.java.class:
+	$(JAVAC) $<
+
+clean:;	\rm -f *.class
+---

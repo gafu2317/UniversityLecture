@@ -1,0 +1,6 @@
+Kore ha tesuto-you no de-ta desu.
+
+Input as the following line
+java TextToUpperTester foobar.txt 
+or execute 'make test'.
+

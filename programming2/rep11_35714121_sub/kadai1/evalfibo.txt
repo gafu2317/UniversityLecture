@@ -1,0 +1,21 @@
+(このファイルは，evalfibo.sh の説明)
+
+※UTF-8環境以外ではシェルスクリプト*.shに日本語を書かないこと．
+※シェルスクリプト*.shに改行コードをLFのままにすること．
+
+---
+#!/bin/sh
+
+n=1
+while [ $n -lt 40 ]; do
+	echo "n=$n"
+	java FiboRec $n
+	java FiboDP $n
+	n=`expr $n + 1`
+done
+---
+
+evalfibo.sh は参考用．コマンドラインから././evalfibo.shで実行するか，
+Makefileのターゲットtestの規則のコメントアウトを外す．
+最初の一度だけ chmod +x evalfibo.sh による実行権限の付与が必要．
+
