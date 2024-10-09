@@ -1,3 +1,4 @@
+//e2-4.c
 extern int v1,v2,v3;
 void sum(void)
 {
