@@ -2,6 +2,11 @@
 
 ## メモ
 
+
+- ### PNG形式からEPS形式に変換
+
+convert task.png task.eps
+
 - ### tex のコンパイルの仕方
 
   platex ファイル名.tex  
