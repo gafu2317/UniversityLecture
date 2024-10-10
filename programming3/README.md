@@ -17,5 +17,7 @@ convert task.png task.eps
 
 - ### tar.gz 圧縮の方法
   
-  「XXXX.tar.gz」として、tar.gz圧縮アーカイブ化する場合
-  tar -zcvf XXXX.tar.gz [File1] [File2] [File3]
+
+  tar -zcvf 35714121.tar.gz 35714121 
+  (必要なフォルダを先に35714121に入れておく)
+
