@@ -23,6 +23,13 @@ kadai2
 evalkp.shは”java KP < input/${i}.txt > output/kpout${i}.txt”をi=1~30までループさせている
 Solver.javaは配列で表を作り、表を使う形でアルゴリズムを組んだ
 KP.javaはScannerで値を読み最初の値と次の値をnumとcapacityにし、それ以降をweightとvalueに入れている
+実行結果はoutputディレクトリにkpoutxx.txtの形で出力されている
+
+例）
+kpout01.txt
+13
+
+これは動的計画法で求めたナップサック問題の答えであり自分で手計算した答えとも一致している。
 
 考察:
 配列を用いて動的計画法のプログラムを作ることを通して配列とfor文などが組み合わさったコードを上手く扱えるようになった。
