@@ -1,3 +1,9 @@
+.file "e3-1a-ia32.s"
+.intel_syntax noprefix
+.text
+.globl      stack
+.type stack, @function
+
 stack:
 mov eax, DWORD PTR v1
 mov edx, DWORD PTR v2

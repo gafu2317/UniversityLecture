@@ -5,7 +5,9 @@
 
 - ### PNG形式からEPS形式に変換
 
-convert task.png task.eps
+magick task.png task.eps
+or
+magick convert task.png task.eps
 
 - ### tex のコンパイルの仕方
 

@@ -1,2 +1,2 @@
-char v1=1; short v2=2; short int v3=3;
-int v4=4; long v5=5; long int v6=6; long long v7=7; long long int v8=8;
+char v1=2; short v2=3; short int v3=4;
+int v4=5; long v5=6; long int v6=7; long long v7=8; long long int v8=9;
