@@ -1,4 +1,4 @@
-#include <stdio.h> // ここを確認
+#include <stdio.h> 
 
 int v1, v2, v3;
 char v4;
