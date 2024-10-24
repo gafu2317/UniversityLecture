@@ -2,6 +2,9 @@
 
 ## メモ
 
+- ### C言語コンパイル
+ 　gcc task.c -o task
+   ./task
 
 - ### PNG形式からEPS形式に変換
 
@@ -19,7 +22,6 @@ magick convert task.png task.eps
 
 - ### tar.gz 圧縮の方法
   
-
   tar -zcvf 35714121.tar.gz 35714121 
   (必要なフォルダを先に35714121に入れておく)
 
