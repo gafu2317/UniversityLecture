@@ -14,6 +14,7 @@ void assign1(void) {
 
 int main(void) {
   assign1();
-  printf("v1: %d, v2: %d, v3: %d, v4: %c\n", v1, v2, v3, v4);
+  printf("v1:%d, v2:%d, v3:%d, v4:%c\n", v1, v2, v3, v4);
+  printf("v5 points to value:%d\n", *v5);
   return 0;
 }
