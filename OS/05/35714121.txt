@@ -1,0 +1,83 @@
+OS 第5回レポート　　　2024年10月31日　学籍番号：3575121 氏名：福富隆大
+
+5-1) デットロックとはなにか？またどのような条件下で発生する可能性があるかを考察しなさい。
+デッドロックとはタスクを処理する順番を変える際にタスクが永遠に待たされることを言う。  
+例えば、タスクAとタスクBがあり、タスクAはタスクBが終わった後に実行する、タスクBはタスクAが終わった後に実行するとすると、どちらも実行できずに永遠に待たされてしまう。  
+
+5-2) 添付ファイル ThreadExecutor.javaについて
+
+(a)実行し、答えが10000にならない理由を考察しなさい。
+スレッドを１０個立ててそれぞれ加算処理をしているが、同じタイミングでcount変数にアクセスして加算処理をしてしまうことがあるので合計が10,000にならない。
+
+(b)セマフォアを用いて、正常動作するようにプログラムを変更しなさい。なおsynchronized修飾子やMonitorクラスは用いないこと。また排他制御領域は必要最小限とすること（必要以上の領域の排他制御（ジャイアントロック）は行わないこと）。
+
+変更点
+count++;の処理がクリティカルセクションなのでセマフォアを使って同時にアクセスされないようにした。
+エラーを吐く可能性があるのでtry-catchを使い割込みが発生した場合はスレッドを中断させ、エラーが出てもセマフォアは解放する必要があるのでfinallyでセマフォアを解放している。  
+
+＜＜＜実行結果＞＞＞
+1回目:加算結果は10000
+2回目:加算結果は10000
+3回目:加算結果は10000
+4回目:加算結果は10000
+5回目:加算結果は10000
+6回目:加算結果は10000
+7回目:加算結果は10000
+8回目:加算結果は10000
+9回目:加算結果は10000
+10回目:加算結果は10000
+
+＜＜＜ソースコード＞＞＞
+import java.util.concurrent.Semaphore;
+
+class RunnableTest implements Runnable {
+    private int count;
+    private Semaphore semaphore = new Semaphore(1); // セマフォの初期値を1に設定
+
+    public void run() {
+        for (int i = 0; i < 1000; i++) {
+            try {
+                semaphore.acquire(); // セマフォを取得
+                count++;
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt(); // 割込みが発生した場合はスレッドを中断する
+            } finally {
+                semaphore.release(); // セマフォを解放
+            }
+        }
+    }
+
+    int getCount() {
+        return count;
+    }
+}
+
+class ThreadExecutor {
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; i++) {
+            RunnableTest r = new RunnableTest();
+            Thread[] threads = new Thread[10];
+
+            for (int j = 0; j < threads.length; j++) {
+                threads[j] = new Thread(r);
+            }
+
+            for (int j = 0; j < threads.length; j++) {
+                threads[j].start();
+            }
+
+            for (int j = 0; j < threads.length; j++) {
+                try {
+                    threads[j].join();
+                } catch (InterruptedException e) {
+                }
+            }
+
+            System.out.println((i + 1) + "回目:加算結果は" + r.getCount());
+        }
+    }
+}
+
+
+
+
