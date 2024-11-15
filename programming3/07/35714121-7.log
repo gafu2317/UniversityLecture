@@ -1,4 +1,4 @@
-This is e-upTeX, Version 3.141592653-p4.1.1-u1.30-230214-2.6 (utf8.euc) (TeX Live 2024) (preloaded format=platex 2024.10.3)  14 NOV 2024 13:51
+This is e-upTeX, Version 3.141592653-p4.1.1-u1.30-230214-2.6 (utf8.euc) (TeX Live 2024) (preloaded format=platex 2024.10.3)  15 NOV 2024 23:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -110,11 +110,7 @@ File: l3backend-dvips.def 2024-05-08 L3 backend support: dvips
 \g__pdf_backend_link_int=\count277
 \g__pdf_backend_link_sf_int=\count278
 )
-(./35714121-7.aux
-
-LaTeX Warning: Label `fig:sample1' multiply defined.
-
-)
+(./35714121-7.aux)
 \openout1 = `35714121-7.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -181,6 +177,11 @@ LaTeX Font Info:    Font shape `JY1/mc/m/n' will be
 ]
 File: sin.eps Graphic file (type eps)
  <sin.eps>
+LaTeX Font Info:    Font shape `JT1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 55.
+LaTeX Font Info:    Font shape `JY1/gt/m/n' will be
+(Font)              scaled to size 7.68799pt on input line 55.
+
 
 [2] (./35714121-7.aux)
  ***********
@@ -188,18 +189,14 @@ pLaTeX2e <2023-02-14>+1, based on
 LaTeX2e <2024-06-01> patch level 2
 L3 programming layer <2024-09-10>
  ***********
-
-
-LaTeX Warning: There were multiply-defined labels.
-
  ) 
 Here is how much of TeX's memory you used:
- 2495 strings out of 474238
- 38038 string characters out of 5743353
- 428895 words of memory out of 5000000
- 25424 multiletter control sequences out of 15000+600000
- 567661 words of font info for 79 fonts, out of 8000000 for 9000
+ 2763 strings out of 474238
+ 40121 string characters out of 5743353
+ 442869 words of memory out of 5000000
+ 25690 multiletter control sequences out of 15000+600000
+ 568278 words of font info for 83 fonts, out of 8000000 for 9000
  934 hyphenation exceptions out of 8191
- 57i,6n,65p,208b,325s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 57i,6n,65p,249b,1114s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on 35714121-7.dvi (2 pages, 1820 bytes).
+Output written on 35714121-7.dvi (2 pages, 5100 bytes).

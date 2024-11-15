@@ -26,7 +26,7 @@
   \label{fig:sample1} % ラベル名を変更
 \end{figure}
 
-\textmd{コードと結果の説明} \\
+\textmd{コードと結果の説明} 
 スライドを参考にして、fileの名前を100文字を上限として読み込むプログラムを作った。\\
 そして、ファイルを読み込みモードでファイルを読み込み、if文を使ってその名前のファイルが存在すれば『そのファイルは存在します。』と表示してファイルを閉じ、そうでなければ『そのファイルは存在しません。』と表示するプログラムを作成した。\\
 
@@ -44,10 +44,26 @@
 \begin{figure}[htbp]
   \centering 
   \includegraphics[width=10cm]{sin.eps}
-  \caption{(ターミナルの部分に実行結果があります)}
-  \label{fig:sample1} % ラベル名を変更
+  \label{fig:sample2} % ラベル名を変更
 \end{figure}
 
-\textmd{gnuplotコマンドの説明} \\
+\textmd{gnuplotコマンドの説明} 
+
+gnuplotコマンドを使って、sin.datのデータをプロットし、x軸の目盛りを0から1まで0.25刻み、y軸の目盛りを-1から1まで0.5刻みに設定し、データを線で表示するように設定した。\\  
+その後、ターミナルに出力された図をeps形式で出力し、sin.epsという名前で保存した。\\
+
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+% gnuplot <Enter>
+gnuplot> plot "sin.dat"
+gnuplot> set xtics 0, 1, 0.25
+gnuplot> set ytics -1, 1, 0.5
+gnuplot> set style data line
+gnuplot> replot
+gnuplot> set term eps
+gnuplot> set output "sin.eps"
+gnuplot> replot
+gnuplot> set output
+gnuplot> exit
+\end{lstlisting}
 
 \end{document}

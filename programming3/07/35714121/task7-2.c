@@ -11,10 +11,10 @@ int main(void) {
     if (fp == NULL) {
         printf("sin.datファイルが存在しません。\n");
     }else{
-        for (i = 0; i < 100; i++) {
+        for (i = 0; i <= 100; i++) {
             x = i / 100.0;
             y = sin(2 * M_PI * x);
-            fprintf(fp, "%lf, %lf\n", x, y);
+            fprintf(fp, "%lf " " %lf\n", x, y);
         }
     }
 
