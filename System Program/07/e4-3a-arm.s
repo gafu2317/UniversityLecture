@@ -30,3 +30,4 @@ a1:
 .comm i,4,4
 .comm va,4,4
 .comm v,4,4
+.global assign3
