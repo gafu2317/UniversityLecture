@@ -12,6 +12,15 @@ OSレポート　　　2024年11月21日　学籍番号：3575121 氏名：福�
 
 (8-3) 最小限のCプログラム（例えばHello World)を作って、　なにもコンパイルオプションを付けない場合と、-staticオプションを付けた場合の、a.outのファイルサイズを確認しなさい。また file a.out コマンドを実行し、Dynamic Linkになっているか確認しなさい。（自由課題）これ以上にa.outのファイルサイズを小さくする方法について考察しなさい。
 
+何もコンパイルオプションをつけないものをa.out,-staticオプションをつけたものをa.out_staticとする
+
+a.outはファイルサイズは33432バイトで、a.out_staticのファイルサイズは900344バイトということがわかった。
+a.out_staticがファイルサイズが大きくなっているが、a.outでも思っていたよりも大きなファイルサイズとなっていた。
+
+a.outはflagsの中にDYLDLINKとあり、動的リンクとなってることがわかる。
+a.out_staticはstatically linkedとあり、静的リンクとなっていることがわかる。
+
+実行結果
 -rwx------ 1 cnt14121 g35714 33432 11月 21 12:55 a.out*
 -rwx------ 1 cnt14121 g35714 900344 11月 21 13:00 a.out_static*
 a.out: Mach-O 64-bit arm64 executable, flags:<NOUNDEFS|DYLDLINK|TWOLEVEL|PIE>
