@@ -1,0 +1,43 @@
+\documentclass[a4j]{jsarticle}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\title{2024年度プログラミング\textsc{iii} 演習課題}
+\author{学籍番号: 35714121 \\ 氏名: 福富隆大}
+\date{2024年1月23日}
+
+\begin{document}
+\maketitle
+
+\textbf{１　はじめに} \\
+
+本レポートは演習課題第15回の実行結果をまとめたものである。\\
+
+\textbf{２　課題の実行結果} \\
+
+\textmd{(課題15-2)} \\
+
+
+ふだんつかっているEPSにへんかんするこまんどが使えず変換できなかったのでpngのままだします
+
+\textmd{(課題15-3)} \\
+
+gnuplot
+\begin{lstlisting}[basicstyle=\ttfamily\footnotesize, frame=single]
+% gnuplot <Enter>
+gnuplot> plot "35714121-1.dat","35714121-2.dat","35714121-3.dat"
+gnuplot> set xtics 0, 2*pi, 0.25
+gnuplot> set ytics -1, 1, 0.5
+gnuplot> set style data line
+gnuplot> replot
+gnuplot> set term eps
+gnuplot> set output "fig.eps"
+gnuplot> replot
+gnuplot> set output
+gnuplot> exit
+\end{lstlisting}
+というこまんどを使おうとしたが
+warning: Too many axis ticks requested (>4e+09)
+warning: Too many axis ticks requested (>4e+09)
+というエラーがでてしまいかいけつできなかった
+\end{document}
