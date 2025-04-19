@@ -1,17 +1,10 @@
 #include <stdio.h>
 
-int main() {
-    fizzBuzz();
-    tripleLoopWithGoto();
-    tripleLoopWithBreak();
-    return 0;
-}
-
 // 課題2-1: for文とif、gotoだけでFizzBuzz
 void fizzBuzz() {
     printf("2-1\n");
     int i;
-    for (i = 1; i <= 100; i++) {
+    for (i = 1; i <= 20; i++) {
         if (i % 3 == 0) {
             printf("Fizz");
             if (i % 5 == 0) {
@@ -65,8 +58,6 @@ void tripleLoopWithBreak() {
             if (found) break;
             
             for (k = 0; k <= 10; k++) {
-                printf("i=%d, j=%d, k=%d\n", i, j, k);
-                
                 if (i == 7 && j == 7 && k == 7) {
                     found = 1;
                     break;
@@ -74,6 +65,13 @@ void tripleLoopWithBreak() {
             }
         }
     }
-    
-    printf("ループを脱出しました: i=%d, j=%d, k=%d\n", i, j, k);
+    // iとjに-1しているのは、ループの最後のインクリメントが行われた後に条件がチェックされるため
+    printf("ループを脱出しました: i=%d, j=%d, k=%d\n", i-1, j-1, k);
+}
+
+int main() {
+    fizzBuzz();
+    tripleLoopWithGoto();
+    tripleLoopWithBreak();
+    return 0;
 }
