@@ -1,0 +1,8 @@
+p(a).
+atom.
+q(b(a)).
+p(X).
+number(123).
+q(c).
+atom.
+r(p(a)).
