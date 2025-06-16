@@ -1,0 +1,12 @@
+services:
+  jupyter:
+    build: ./jupyter # jupyter/Dockerfile を使用してイメージをビルド
+    ports:
+      - "8888:8888" # ホストの8888ポートをコンテナの8888ポートにマッピング [1]
+    volumes:
+      - ./:/home/jovyan/work # ホストのカレントディレクトリをコンテナの /home/jovyan/work にマウント [1-3]
+
+  plantuml:
+    build: ./plantuml # plantuml/Dockerfile を使用してイメージをビルド
+    ports:
+      - "8080:8080" # ホストの8080ポートをコンテナの8080ポートにマッピング [1]
