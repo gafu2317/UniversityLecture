@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+f#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 第2回演習問題1
