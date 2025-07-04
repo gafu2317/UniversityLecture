@@ -1,0 +1,197 @@
+\documentclass{jarticle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage{graphicx}
+\usepackage{bm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% format
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\oddsidemargin}{0.455cm}
+\setlength{\evensidemargin}{0.455cm}
+\setlength{\textwidth}{15.5cm}
+\setlength{\textheight}{22.54cm}
+\setlength{\headheight}{0mm}
+\setlength{\headsep}{0mm}
+\setlength{\topskip}{0mm}
+\setcounter{topnumber}{100}
+\setcounter{bottomnumber}{100}
+\setcounter{totalnumber}{100}
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\textfraction}{0.0}
+\renewcommand{\floatpagefraction}{0.0}
+\renewcommand{\baselinestretch}{1.0}
+\renewcommand{\today}{\number\year 年\number\month 月\number\day 日}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math symbols and commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\eq}[1]{(\ref{#1})}
+\newcommand{\mtx}[2]{\left[\begin{array}{#1} #2 \end{array}\right]}
+\newcommand{\mycase}[1]{\left\{\begin{array}{ll} #1 \end{array} \right.}
+\newcommand{\mb}[1]{\mbox{\boldmath$#1$}}
+\newcommand{\lw}[1]{\smash{\lower2.ex\hbox{#1}}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\eps}{\varepsilon}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myred}[1]{\textcolor{red}{#1}}
+\newcommand{\myredbf}[1]{\textcolor{red}{\bf #1}}
+\newcommand{\myblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\mybluebf}[1]{\textcolor{blue}{\bf #1}}
+\newcommand{\mydarkblue}[1]{\textcolor[rgb]{0.0,0.0,0.5}{#1}}
+\newcommand{\mygreen}[1]{\textcolor[rgb]{0.0,0.5,0.0}{#1}}
+\newcommand{\mygreenbf}[1]{\textcolor[rgb]{0.0,0.5,0.0}{\bf #1}}
+\newcommand{\mypurple}[1]{\textcolor[rgb]{0.5,0.0,0.5}{#1}}
+\newcommand{\mypurplebf}[1]{\textcolor[rgb]{0.5,0.0,0.5}{\bf #1}}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ここからがレポートの記述
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center}
+{\large \bf 知能プログラミング演習I 第4回レポート}
+\end{center} %
+
+\begin{flushright}
+\today % Date
+\hskip 1mm
+学籍番号 % 学籍番号
+\hskip 1mm
+氏名 % 氏名
+\end{flushright} % Name
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{実験設定}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+本実験では、リカレントニューラルネットワーク（RNN）を用いた音声認識タスクにおいて、異なるハイパーパラメータ設定による性能比較を行った。
+
+\subsection{ネットワーク構造}
+\begin{itemize}
+\item 入力層：77次元（音響特徴量）
+\item 中間層（隠れ層）：1層のRNN層
+\item 出力層：10次元（数字0-9の分類）
+\end{itemize}
+
+\subsection{実験パラメータ}
+以下のパラメータ設定で実験を実施した：
+\begin{itemize}
+\item 中間層ユニット数：64, 128
+\item 最適化手法：SGD, Adam
+\item 活性化関数：Sigmoid関数
+\item 学習率：0.001
+\item エポック数：30
+\item 訓練データ：発話番号1-7
+\item テストデータ：発話番号8-9, 0
+\end{itemize}
+
+\subsection{データセット}
+Lyon decimation 128を用いた音声データセットを使用し、スケーリング係数$1 \times 10^3$を適用した。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{結果}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{誤差関数の推移}
+
+図\ref{fig:error_sgd_64}から図\ref{fig:error_adam_128}に各設定における訓練誤差とテスト誤差の推移を示す。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result_opt_sgd_q_64_act_sigmoid_epoch_30_error.pdf}
+\caption{SGD, 64ユニットにおける誤差推移}
+\label{fig:error_sgd_64}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result_opt_sgd_q_128_act_sigmoid_epoch_30_error.pdf}
+\caption{SGD, 128ユニットにおける誤差推移}
+\label{fig:error_sgd_128}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result_opt_adam_q_64_act_sigmoid_epoch_30_error.pdf}
+\caption{Adam, 64ユニットにおける誤差推移}
+\label{fig:error_adam_64}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{result_opt_adam_q_128_act_sigmoid_epoch_30_error.pdf}
+\caption{Adam, 128ユニットにおける誤差推移}
+\label{fig:error_adam_128}
+\end{figure}
+
+\clearpage
+
+\subsection{混同行列}
+
+図\ref{fig:conf_sgd_64}から図\ref{fig:conf_adam_128}に各設定における混同行列を示す。
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{result_opt_sgd_q_64_act_sigmoid_epoch_30_confusion.pdf}
+\caption{SGD, 64ユニットにおける混同行列}
+\label{fig:conf_sgd_64}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{result_opt_sgd_q_128_act_sigmoid_epoch_30_confusion.pdf}
+\caption{SGD, 128ユニットにおける混同行列}
+\label{fig:conf_sgd_128}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{result_opt_adam_q_64_act_sigmoid_epoch_30_confusion.pdf}
+\caption{Adam, 64ユニットにおける混同行列}
+\label{fig:conf_adam_64}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.6\textwidth]{result_opt_adam_q_128_act_sigmoid_epoch_30_confusion.pdf}
+\caption{Adam, 128ユニットにおける混同行列}
+\label{fig:conf_adam_128}
+\end{figure}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{考察}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{最適化手法の比較}
+最適化手法としてSGDを用いた場合（図\ref{fig:error_sgd_64}, \ref{fig:error_sgd_128}）、誤差が十分に収束せず、学習が停滞している様子が確認できる。混同行列（図\ref{fig:conf_sgd_64}, \ref{fig:conf_sgd_128}）からも、ほとんどのテストデータが一つのクラスに誤分類されており、有効な学習が行われていないことがわかる。
+一方、Adamを用いた場合（図\ref{fig:error_adam_64}, \ref{fig:error_adam_128}）では、訓練誤差・テスト誤差ともにエポック数の増加に伴い滑らかに減少し、学習が正常に進行している。これは、RNNの複雑な誤差曲面において、固定学習率のSGDでは局所解に陥りやすいのに対し、パラメータごとに学習率を適応的に調整するAdamがはるかに有効であることを示唆している。
+
+\subsection{隠れ層ユニット数の影響}
+Adamを用いた結果においてユニット数64（図\ref{fig:error_adam_64}）と128（図\ref{fig:error_adam_128}）を比較すると、128ユニットの方が最終的な訓練誤差、テスト誤差ともに低い値に収束しており、より高い性能を示した。混同行列（図\ref{fig:conf_adam_64}, \ref{fig:conf_adam_128}）を見ても、128ユニットの方が正解数（対角成分の合計）が多く、分類精度が向上している。これは、ユニット数を増やすことでモデルの表現力が高まり、より複雑なデータの特徴を捉えられたためと考えられる。ただし、ユニット数を過剰に増やすと過学習のリスクも高まるため、モデルの複雑さと汎化性能はトレードオフの関係にある。
+
+\subsection{分類性能の評価}
+最も性能が良かったAdam・128ユニットの混同行列（図\ref{fig:conf_adam_128}）を用いて詳細な分類性能を評価する。テストデータ150サンプルに対し、正しく分類されたのは119サンプルであり、全体の正解率は約79.3\%であった。誤分類の例を見ると、数字の「9」を「7」と、「2」を「1」と、「8」を「6」と誤認識するケースが見られる。これは、発音における音響的特徴が類似しているため、モデルが混同しやすいことを示しているはずだが、個人的な感覚からするとあまり似た発音ではないので不思議だった。全体としては、Adamを用いることで多くの数字を高精度で分類できていることが対角成分の数値から確認できる。
+
+\subsection{学習の安定性}
+誤差の推移グラフから、学習プロセスの安定性を評価できる。SGDを用いた場合、誤差の値が大きく振動し、学習が不安定である。これに対し、Adamを用いた場合は誤差が安定して単調に減少しており、学習プロセスが非常に安定していることがわかる。特に、訓練誤差とテスト誤差の間に大きな乖離が見られず、両者が連動して減少している点（図\ref{fig:error_adam_128}）は、モデルが過学習に陥ることなく、未知のデータに対する汎化性能を保ちながら学習できていることを示している。この安定性は、Adamの持つ適応的な学習率調整機能が、RNNの学習における勾配の消失・爆発問題を緩和し、安定した勾配の流れを維持した結果と考えられる。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ここまでがレポートの記述
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
