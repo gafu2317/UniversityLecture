@@ -1,0 +1,27 @@
+{
+  "ai_settings": {
+    "name": "Math Detective AI",
+    "persona": "🕵️ 数学探偵",
+    "model": "gemini-pro",
+    "max_hint_levels": 3,
+    "understanding_threshold": 0.7
+  },
+  "prompt_settings": {
+    "system_role": "数学学習支援探偵",
+    "hint_levels": {
+      "1": "概念的ヒント",
+      "2": "手法的ヒント", 
+      "3": "具体的ヒント"
+    },
+    "forbidden_actions": [
+      "答えを直接教える",
+      "計算結果を示す",
+      "完全な解法を提示する"
+    ]
+  },
+  "evaluation_criteria": {
+    "hint_efficiency": "最小ヒント数での理解",
+    "concept_understanding": "概念の理解度",
+    "problem_solving_independence": "自立的問題解決能力"
+  }
+}

@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 void printImageInfo(Image* src)
 {
@@ -127,45 +130,78 @@ void cvtColorGray(const Image* src, Image* dest)
 	}
 }
 
-void drawRectangle(Image* src, const Point pt, const int template_width, const int template_height)
+void drawRectangle(Image *img, Point p, int width, int height, int color)
 {
-	if (src->channel == 1)
+	int i, j;
+	for (j = p.y; j < p.y + height; j++)
 	{
-		int i, j;
-		for (i = 0; i < template_width; i++)
+		for (i = p.x; i < p.x + width; i++)
 		{
-			src->data[src->width*pt.y + pt.x + i] = 255;
-			src->data[src->width*(pt.y + template_height) + pt.x + i] = 255;
-		}
-		for (j = 0; j < template_height; j++)
-		{
-			src->data[src->width*(pt.y + j) + pt.x] = 255;
-			src->data[src->width*(pt.y + j) + pt.x + template_width] = 255;
-		}
-	}
-	else if (src->channel == 3)
-	{
-		int i, j;
-		for (i = 0; i < template_width; i++)
-		{
-			src->data[3 * (src->width*pt.y + pt.x + i) + 0] = 255;
-			src->data[3 * (src->width*pt.y + pt.x + i) + 1] = 0;
-			src->data[3 * (src->width*pt.y + pt.x + i) + 2] = 0;
-			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 0] = 255;
-			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 1] = 0;
-			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 2] = 0;
-		}
-		for (j = 0; j < template_height; j++)
-		{
-			src->data[3 * (src->width*(pt.y + j) + pt.x) + 0] = 255;
-			src->data[3 * (src->width*(pt.y + j) + pt.x) + 1] = 0;
-			src->data[3 * (src->width*(pt.y + j) + pt.x) + 2] = 0;
-			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 0] = 255;
-			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 1] = 0;
-			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 2] = 0;
+			if (i < 0 || i >= img->width || j < 0 || j >= img->height)
+				continue;
+			if (i == p.x || i == p.x + width - 1 || j == p.y || j == p.y + height - 1)
+			{
+				if (img->channel == 3)
+				{
+					img->data[3 * (j * img->width + i) + 0] = 255;
+					img->data[3 * (j * img->width + i) + 1] = 0;
+					img->data[3 * (j * img->width + i) + 2] = 0;
+				}
+				else
+				{
+					img->data[j * img->width + i] = 255;
+				}
+			}
 		}
 	}
 }
+
+void getRotatedImageSize(int width, int height, int angle, int *new_width, int *new_height) {
+    double rad = angle * M_PI / 180.0;
+    double sin_val = fabs(sin(rad));
+    double cos_val = fabs(cos(rad));
+    *new_width = (int)(width * cos_val + height * sin_val);
+    *new_height = (int)(width * sin_val + height * cos_val);
+}
+
+// {
+// 	if (src->channel == 1)
+// 	{
+// 		int i, j;
+// 		for (i = 0; i < template_width; i++)
+// 		{
+// 			src->data[src->width*pt.y + pt.x + i] = 255;
+// 			src->data[src->width*(pt.y + template_height) + pt.x + i] = 255;
+// 		}
+// 		for (j = 0; j < template_height; j++)
+// 		{
+// 			src->data[src->width*(pt.y + j) + pt.x] = 255;
+// 			src->data[src->width*(pt.y + j) + pt.x + template_width] = 255;
+// 		}
+// 	}
+// 	else if (src->channel == 3)
+// 	{
+// 		int i, j;
+// 		for (i = 0; i < template_width; i++)
+// 		{
+// 			src->data[3 * (src->width*pt.y + pt.x + i) + 0] = 255;
+// 			src->data[3 * (src->width*pt.y + pt.x + i) + 1] = 0;
+// 			src->data[3 * (src->width*pt.y + pt.x + i) + 2] = 0;
+// 			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 0] = 255;
+// 			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 1] = 0;
+// 			src->data[3 * (src->width*(pt.y + template_height) + pt.x + i) + 2] = 0;
+// 		}
+// 		for (j = 0; j < template_height; j++)
+// 		{
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x) + 0] = 255;
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x) + 1] = 0;
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x) + 2] = 0;
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 0] = 255;
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 1] = 0;
+// 			src->data[3 * (src->width*(pt.y + j) + pt.x + template_width) + 2] = 0;
+// 		}
+// 	}
+// }
 
 char* getDirAndBaseName(const char* name)
 {
