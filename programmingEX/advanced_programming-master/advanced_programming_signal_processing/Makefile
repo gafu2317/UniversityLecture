@@ -31,7 +31,7 @@ level1: matching
 	sh answer_final.sh result level1
 
 level2: matching
-	time sh run.sh level2
+	time sh run.sh level2a
 	sh answer_final.sh result level2
 
 level3: matching
