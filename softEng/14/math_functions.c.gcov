@@ -1,0 +1,60 @@
+        -:    0:Source:math_functions.c
+        -:    0:Graph:test_runner_coverage-math_functions.gcno
+        -:    0:Data:test_runner_coverage-math_functions.gcda
+        -:    0:Runs:3
+        -:    0:Programs:1
+        -:    1:#include "math_functions.h"
+        -:    2:
+        9:    3:int add(int a, int b) {
+        9:    4:    return a + b;
+        -:    5:}
+        -:    6:
+        9:    7:int subtract(int a, int b) {
+        9:    8:    return a - b;
+        -:    9:}
+        -:   10:
+        9:   11:int multiply(int a, int b) {
+        9:   12:    return a * b;
+        -:   13:}
+        -:   14:
+       12:   15:int divide(int a, int b) {
+       12:   16:    if (b == 0) {
+        3:   17:        return -1;
+        -:   18:    }
+        9:   19:    return a / b;
+       12:   20:}
+        -:   21:
+       24:   22:int factorial(int n) {
+       24:   23:    if (n < 0) {
+        3:   24:        return -1;
+        -:   25:    }
+       21:   26:    if (n == 0 || n == 1) {
+        9:   27:        return 1;
+        -:   28:    }
+       12:   29:    return n * factorial(n - 1);
+       24:   30:}
+        -:   31:
+       18:   32:int is_prime(int n) {
+       18:   33:    if (n < 2) {
+        6:   34:        return 0;
+        -:   35:    }
+       21:   36:    for (int i = 2; i * i <= n; i++) {
+       12:   37:        if (n % i == 0) {
+        3:   38:            return 0;
+        -:   39:        }
+        9:   40:    }
+        9:   41:    return 1;
+       18:   42:}
+        -:   43:
+      177:   44:int fibonacci(int n) {
+      177:   45:    if (n < 0) {
+        3:   46:        return -1;
+        -:   47:    }
+      174:   48:    if (n == 0) {
+       36:   49:        return 0;
+        -:   50:    }
+      138:   51:    if (n == 1) {
+       57:   52:        return 1;
+        -:   53:    }
+       81:   54:    return fibonacci(n - 1) + fibonacci(n - 2);
+      177:   55:}
