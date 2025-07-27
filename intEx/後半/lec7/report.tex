@@ -66,11 +66,11 @@
 \end{center} %
 
 \begin{flushright} 
-XXXX年YYYY月ZZZZ日 % Date
+2025年7月27日 % Date
 \hskip 1mm
-学籍番号 % 学籍番号
+学籍番号 35714121% 学籍番号
 \hskip 1mm
-氏名 % 氏名
+氏名 福富隆大% 氏名
 \end{flushright} % Name
 
 \renewcommand{\theenumi}{(\alph{enumi})}
@@ -91,23 +91,23 @@ XXXX年YYYY月ZZZZ日 % Date
 	 \end{bmatrix}, \
 	 \text{\tt x} - \text{\tt y} &:
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? \\
-	  ??? 
+	  x_1 - y_1 \\
+	  x_2 - y_2 \\
+	  x_3 - y_3 
 	 \end{bmatrix}, \
 	 \text{\tt x} * \text{\tt y}
 	 :
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? \\
-	  ??? 
+	  x_1 \cdot y_1 \\
+	  x_2 \cdot y_2 \\
+	  x_3 \cdot y_3 
 	 \end{bmatrix}, \ 
 	 \text{\tt x} / \text{\tt y}
 	 :
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? \\
-	  ??? 
+	  x_1 / y_1 \\
+	  x_2 / y_2 \\
+	  x_3 / y_3 
 	 \end{bmatrix}
 	\end{align*}
 
@@ -115,30 +115,23 @@ XXXX年YYYY月ZZZZ日 % Date
 	\begin{align*}
 	 \text{\tt M} + \text{\tt x}:
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? %\\
-%	  ??? 
+	  \bm m_1^{\top} + \bm x^{\top} \\
+	  \bm m_2^{\top} + \bm x^{\top}
 	 \end{bmatrix}, \
-	 % \\
 	 \text{\tt M} - \text{\tt x}: 
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? %\\
-%	  ??? 
+	  \bm m_1^{\top} - \bm x^{\top} \\
+	  \bm m_2^{\top} - \bm x^{\top}
 	 \end{bmatrix}, \
-	 % \\
 	 \text{\tt M} * \text{\tt x}: 
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? %\\
-%	  ??? 
+	  \bm m_1^{\top} \odot \bm x^{\top} \\
+	  \bm m_2^{\top} \odot \bm x^{\top}
 	 \end{bmatrix}, \
-	 % \\
 	 \text{\tt M} / \text{\tt x}: 
 	 \begin{bmatrix}
-	  ??? \\
-	  ??? %\\
-%	  ??? 
+	  \bm m_1^{\top} \oslash \bm x^{\top} \\
+	  \bm m_2^{\top} \oslash \bm x^{\top}
 	 \end{bmatrix}
 	\end{align*}
 	
@@ -146,68 +139,72 @@ XXXX年YYYY月ZZZZ日 % Date
 	\begin{align*}
 	 \text{\tt N + K}:  
 	 \left[
-	 ???, 
-	 ???
+	 N_1 + K, 
+	 N_2 + K
 	 \right] 
-	 \in \mathbb{R}^{??? \times ??? \times ???}	 
+	 \in \mathbb{R}^{2 \times 4 \times 3}	 
 	\end{align*}
 
  \item 
 	\begin{align*}
 	 \text{\tt N @ M.transpose(0,1)}
 	 &: 
-	 % =
 	 \left[
-	 ???, 
-	 ???
+	 N_1 M^{\top}, 
+	 N_2 M^{\top}
 	 \right] 
-	 \in \mathbb{R}^{??? \times ??? \times ???}	 	 
+	 \in \mathbb{R}^{2 \times 4 \times 2}	 	 
 	\end{align*}
 
 	\begin{align*}
-	 \text{\tt linear.weight}: \bm W \in \mathbb{R}^{??? \times ???}
+	 \text{\tt linear.weight}: \bm W \in \mathbb{R}^{2 \times 3}
 	\end{align*}
 
 	\begin{align*}
 	 \text{\tt linear(M)} &: 
-	 ???
-	 \in \mathbb{R}^{??? \times ???}
+	 MW^{\top}
+	 \in \mathbb{R}^{2 \times 2}
 	 \\
 	 \text{\tt linear(N)} &:  
 	 	 \left[
-	 ???,
-	 ???
+	 N_1 W^{\top},
+	 N_2 W^{\top}
 	 \right]
-	 \in \mathbb{R}^{??? \times ??? \times ???}
+	 \in \mathbb{R}^{2 \times 4 \times 2}
 	\end{align*}
 
  \item 
 	\begin{align*}
 	 \text{\tt A @ V}: &
 	 \left[
-	 ???,
-	 ???
+	 A_1 V_1,
+	 A_2 V_2
 	 \right]
-	 \in \mathbb{R}^{??? \times ??? \times ???}
+	 \in \mathbb{R}^{2 \times 4 \times 3}
 	\end{align*}
 
  \item 
 	\begin{align*}
 	 \text{\tt V.transpose(1,2))}: &
 	 \left[
-	 ???,
-	 ???
+	 V_1^{\top},
+	 V_2^{\top}
 	 \right]	 
 	 \\
 	 \text{\tt N @ V.transpose(1,2)}: &
 	 \left[
-	 ???,
-	 ???
+	 N_1 V_1^{\top},
+	 N_2 V_2^{\top}
 	 \right]
-	 \in \mathbb{R}^{??? \times ??? \times ???}
+	 \in \mathbb{R}^{2 \times 4 \times 5}
 	\end{align*}
 
- \item 
+ \item F.softmax関数のdim引数について：
+	\begin{itemize}
+		\item dim=0の場合：バッチ次元（最初の次元）に対してsoftmaxが適用され、各位置で2つのバッチ間の確率分布が計算される。
+		\item dim=1の場合：長さL次元（2番目の次元）に対してsoftmaxが適用され、各系列の各位置間で確率分布が計算される。
+		\item dim=2の場合：特徴次元（最後の次元）に対してsoftmaxが適用され、各位置の特徴間で確率分布が計算される。
+	\end{itemize} 
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -215,11 +212,32 @@ XXXX年YYYY月ZZZZ日 % Date
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{enumerate}
- \item 
- \item 
- \item 
- \item 
- \item 
+ \item tensor配列input\_idxは3つの文字列（"tiktok", "tictac", "tuktuk"）をトークンIDの配列として表現している。配列のサイズは$3 \times 6$であり、1次元目がバッチサイズ（文字列の数）、2次元目が文字列の長さに対応している。
+ 
+ \item token\_embedding = nn.Embedding(char\_size, dim\_embed)は文字のIDを高次元ベクトルに変換する埋め込み層である。char\_sizeは文字の種類数（26）、dim\_embedは埋め込み次元数（2）を表す。x = token\_embedding(input\_idx)で作成されるxのサイズは$3 \times 6 \times 2$であり、1次元目がバッチサイズ、2次元目が文字列の長さ、3次元目が埋め込み次元に対応している。
+ 
+ \item embed-1.pdfの図は、Token Embeddingによって3つの文字列が2次元空間にプロットされた結果を示している。重複して同じ位置にある点があるのは、同じ文字は常に同じ埋め込みベクトルを持つためである。例えば、全ての't'文字は同じ座標にマップされ、'k'文字も同様に重複している。
+ 
+ \item PositionalEncodingクラスのpeに以下のコードを実装した：
+	\begin{verbatim}
+	for pos in range(L):
+	    for i in range(0, dim_embed, 2):
+	        pe[pos, i] = torch.sin(torch.tensor(pos / (10000 ** (2 * i / dim_embed))))
+	        if i + 1 < dim_embed:
+	            pe[pos, i + 1] = torch.cos(torch.tensor(pos / (10000 ** (2 * i / dim_embed))))
+	\end{verbatim}
+	
+	結果として作成されるembed-2.pdfの図では、Positional Encodingによって位置情報が加えられ、embed-1.pdfで重複していた点が分離されている。同じ文字でも位置によって異なる座標に配置されるようになった。
+ 
+ \item SelfAttentionクラスのforward関数に以下のコードを実装した：
+	\begin{verbatim}
+	K_t = K.transpose(-2, -1)
+	scaled_dot_product = Q @ K_t / torch.sqrt(torch.tensor(self.head_size, dtype=torch.float32))
+	atten_wei = F.softmax(scaled_dot_product, dim=-1)
+	out = atten_wei @ V
+	\end{verbatim}
+	
+	結果として作成されるembed-3.pdfの図では、Self-Attentionによって各位置の表現が他の位置との関係を考慮して更新され、embed-2.pdfからさらに点の配置が変化している。文脈を考慮した表現になったことで、重複の度合いがさらに変化した。
 \end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -227,8 +245,24 @@ XXXX年YYYY月ZZZZ日 % Date
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{enumerate}
- \item 
- \item 
+ \item loss\_fn(logits, y)は交差エントロピー損失を計算している。logitsはモデルの出力（各文字の予測スコア）で、yは正解の文字IDである。この損失関数により、モデルは次の文字を正確に予測するように学習される。
+
+ \item Transformerクラスを以下のアーキテクチャで完成させた：
+	\begin{itemize}
+		\item Token埋め込み → Positional encoding → Self-attention (single head) → 全結合層
+		\item 全結合層：線形層(output: 100次元) → ReLU → 線形層(output: char\_size次元)
+	\end{itemize}
+	
+	学習後の損失推移はloss.pdfに示されており、5000ステップの学習で損失が約4.5から0.2まで減少した。
+	
+	学習後に生成された文章の例：
+	\begin{enumerate}
+		\item 入力「ももからうまれた」→「ももからうまれたおとこのこを、おじいさんがはたけではたらいていますと、「やーい、よぼよぼじじい。よぼよぼじじい」と、」
+		\item 入力「ももからうまれた」→「ももからうまれたおとこのこを、おじいさんがはたけではたわへせかい」すずめをつか」おおばあさんはかにこのってかえってい」
+		\item 入力「ももからうまれた」→「ももからうまれたおとこのこを、おじいさんがはたけではたらいていますと、「やーい、よぼよぼじじい。よぼよぼじじい」と、」
+		\item （学習前の例）「ももからうまれたおずぽでごはばがはそりっ！まびけ「つぽとえら３たらなも２『ねー「きわとゅぎご・て・え」
+		\item （学習後の特徴）昔話らしい文体で、文法的に意味のある日本語が生成されるようになった
+	\end{enumerate}
 \end{enumerate}
 
 \end{document}

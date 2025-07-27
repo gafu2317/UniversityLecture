@@ -47,6 +47,11 @@ class PositionalEncoding(nn.Module):
         # --------------------------------------------------
         # 課題２で作成したものをコピー
         # --------------------------------------------------        
+        for pos in range(L):
+            for i in range(0, dim, 2):
+                pe[pos, i] = torch.sin(torch.tensor(pos / (10000 ** (2 * i / dim))))
+                if i + 1 < dim:
+                    pe[pos, i + 1] = torch.cos(torch.tensor(pos / (10000 ** (2 * i / dim))))
         
         self.register_buffer('pe', pe) 
 
@@ -72,6 +77,15 @@ class SelfAttention(nn.Module):
         # --------------------------------------------------
         # 課題２で作成したものをコピー
         # --------------------------------------------------
+        K_t = K.transpose(-2, -1)  # バッチ次元を保持しつつ最後の2次元を転置
+        
+        scaled_dot_product = Q @ K_t / torch.sqrt(torch.tensor(self.head_size, dtype=torch.float32))
+
+        atten_wei = F.softmax(scaled_dot_product, dim=-1)  # 最後の次元でsoftmax
+        
+        out = atten_wei @ V
+
+        return out
 
 
 class Transformer(nn.Module):
@@ -84,13 +98,17 @@ class Transformer(nn.Module):
         # 各層の定義を作成
         # 
 
-        # self.position_encoding = ...
+        self.position_encoding = PositionalEncoding(dim_embed, L)
 
-        # self.selfatten = ...
+        self.selfatten = SelfAttention(dim_embed, L, head_size)
                 
         self.flatten = nn.Flatten()        
         
-        self.fc = nn.Sequential(nn.Linear(in_features=dim_embed*L, out_features=char_size))
+        self.fc = nn.Sequential(
+            nn.Linear(in_features=head_size*L, out_features=100),
+            nn.ReLU(),
+            nn.Linear(in_features=100, out_features=char_size)
+        )
         # Full connectionを指定されたMLPに変更
         # 最初の入力次元の変化に要注意(直前に出力されてるサイズ及びflattenを考えると...)
         
@@ -101,6 +119,8 @@ class Transformer(nn.Module):
         # 
         # Positional-encodingとSelf-attentionの実行を作成
         #
+        x = self.position_encoding(x)
+        x = self.selfatten(x)
         
         x = self.flatten(x) # Batchsize x (L*dim_embed) の配列に変形して通常のMLPに渡す
         

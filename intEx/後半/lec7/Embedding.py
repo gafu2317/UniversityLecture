@@ -38,6 +38,11 @@ class PositionalEncoding(nn.Module):
         #
         # ここにpeの要素を定義するコードを作成
         #     
+        for pos in range(L):
+            for i in range(0, dim_embed, 2):
+                pe[pos, i] = torch.sin(torch.tensor(pos / (10000 ** (2 * i / dim_embed))))
+                if i + 1 < dim_embed:
+                    pe[pos, i + 1] = torch.cos(torch.tensor(pos / (10000 ** (2 * i / dim_embed))))
         
         self.register_buffer('pe', pe) # 今回のPositionalEncodingは学習しない定数であることの指定(これ以降，クラス内からはself.peでアクセス可能(編集不要)
 
@@ -69,14 +74,18 @@ class SelfAttention(nn.Module):
         # 
         
         # K_t = ... Kの転置処理．Kのサイズをよく考えること
+        K_t = K.transpose(-2, -1)  # バッチ次元を保持しつつ最後の2次元を転置
         
         # scaled_dot_product = ...
+        scaled_dot_product = Q @ K_t / torch.sqrt(torch.tensor(self.head_size, dtype=torch.float32))
 
         # atten_wei = F.softmax(scaled_dot_product, dim=???) # どの次元でsoftmaxをとる?
+        atten_wei = F.softmax(scaled_dot_product, dim=-1)  # 最後の次元でsoftmax
         
         # out = ... 最終的な出力
+        out = atten_wei @ V
 
-        # return out
+        return out
 
 def plot_embedding(strs, pos, fname):
     plt.figure()
@@ -114,12 +123,12 @@ plot_embedding(strs, x.detach().numpy(), 'embed-1.pdf') # x.detach().numpy()はx
 
 # -- 以降は実装したら順次コメントを外す --
 
-# x = pe(x)
+x = pe(x)
 
-# plot_embedding(strs, x.detach().numpy(), 'embed-2.pdf')        
+plot_embedding(strs, x.detach().numpy(), 'embed-2.pdf')        
 
-# selfatten = SelfAttention(dim_embed=2, head_size=2)
+selfatten = SelfAttention(dim_embed=2, head_size=2)
 
-# x = selfatten(x)
+x = selfatten(x)
 
-# plot_embedding(strs, x.detach().numpy(), 'embed-3.pdf')
+plot_embedding(strs, x.detach().numpy(), 'embed-3.pdf')

@@ -1,0 +1,165 @@
+\documentclass{jarticle}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage{graphicx}
+\usepackage{bm}
+\usepackage{url}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% format stuffs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setlength{\oddsidemargin}{0.455cm} 
+\setlength{\evensidemargin}{0.455cm} 
+\setlength{\textwidth}{15.5cm} 
+\setlength{\textheight}{22.54cm}
+\setlength{\headheight}{0mm}
+\setlength{\headsep}{0mm}
+\setlength{\topskip}{0mm}
+\setcounter{topnumber}{100}
+\setcounter{bottomnumber}{100}
+\setcounter{totalnumber}{100}
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\textfraction}{0.0}
+\renewcommand{\floatpagefraction}{0.0}
+\renewcommand{\baselinestretch}{1.0}
+\pagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% math symbols and commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\eq}[1]{(\ref{#1})}
+\newcommand{\mtx}[2]{\left[\begin{array}{#1} #2 \end{array}\right]}
+\newcommand{\mycase}[1]{\left\{\begin{array}{ll} #1 \end{array} \right.}
+\newcommand{\mb}[1]{\mbox{\boldmath$#1$}}
+\newcommand{\lw}[1]{\smash{\lower2.ex\hbox{#1}}}
+\newcommand{\zero}{\mathbf{0}}
+\newcommand{\one}{\mathbf{1}}
+\newcommand{\eps}{\varepsilon}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colors
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\myred}[1]{\textcolor{red}{#1}}
+\newcommand{\myredbf}[1]{\textcolor{red}{\bf #1}}
+\newcommand{\myblue}[1]{\textcolor{blue}{#1}}
+\newcommand{\mybluebf}[1]{\textcolor{blue}{\bf #1}}
+\newcommand{\mydarkblue}[1]{\textcolor[rgb]{0.0,0.0,0.5}{#1}}
+\newcommand{\mygreen}[1]{\textcolor[rgb]{0.0,0.5,0.0}{#1}}
+\newcommand{\mygreenbf}[1]{\textcolor[rgb]{0.0,0.5,0.0}{\bf #1}}
+\newcommand{\mypurple}[1]{\textcolor[rgb]{0.5,0.0,0.5}{#1}}
+\newcommand{\mypurplebf}[1]{\textcolor[rgb]{0.5,0.0,0.5}{\bf #1}}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ここから課題レポートの記述
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{center} 
+{\large \bf 知的プログラミング演習I 第8回レポート}
+\end{center} %
+
+\begin{flushright} 
+2025年7月27日 % Date
+\hskip 1mm
+学籍番号 35714121% 学籍番号
+\hskip 1mm
+氏名福富隆大 % 氏名
+\end{flushright} % Name
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{レポートのテーマ}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+本レポートでは、課題選択肢の中から「複雑なニューラルネットワークの実装」をテーマとして選択する。LSTM（Long Short-Term Memory）を用いた再帰型ニューラルネットワークを実装し、時系列データの分類問題に適用した結果について報告する。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{実装したモデル}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+今回実装したのは、LSTMを用いた再帰型ニューラルネットワークである。LSTMは通常のRNN（再帰型ニューラルネットワーク）の欠点である勾配消失問題を解決するために開発された手法で、長期の依存関係を学習できる特徴がある。
+
+LSTMの主要な構成要素は以下の通り：
+\begin{itemize}
+\item \textbf{忘却ゲート}: 過去の情報をどれだけ忘れるかを制御
+\item \textbf{入力ゲート}: 新しい情報をどれだけ取り入れるかを制御
+\item \textbf{出力ゲート}: 出力をどれだけ制御するか
+\item \textbf{セル状態}: 長期記憶を保持する内部状態
+\end{itemize}
+
+今回の実装では、時系列データから特定のパターン（[1,0,1]の並び）を検出する2クラス分類問題を解くことを目標とした。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{ネットワークの詳細設定}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+実装したLSTMネットワークの詳細設定は以下の通り：
+
+\begin{itemize}
+\item \textbf{入力層}: 2次元（0と1のワンホットエンコーディング）
+\item \textbf{隠れ層}: 10ユニット（LSTMセル）
+\item \textbf{出力層}: 2次元（パターンあり/なしの2クラス）
+\item \textbf{系列長}: 15ステップ
+\item \textbf{活性化関数}: シグモイド関数（ゲート）、tanh関数（セル状態）
+\item \textbf{重み初期化}: 標準偏差0.1の正規分布
+\item \textbf{サンプル数}: 200個のランダム生成データ
+\end{itemize}
+
+プログラムは lec8.py に保存されており、完全なLSTMの順伝播計算を含んでいる。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{実験結果}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+実装したLSTMモデルでいくつかのサンプルデータに対して予測を実行した。ただし、今回は学習処理（逆伝播による重み更新）は実装していないため、ランダム初期化状態での予測結果となっている。
+
+実験では以下のような結果が得られた：
+\begin{itemize}
+\item モデルは正常に動作し、各時系列に対して確率値を出力
+\item 初期状態では予測精度は約50\%（ランダム予測レベル）
+\item LSTMの内部状態（隠れ状態とセル状態）が正しく更新されることを確認
+\item 異なる入力系列に対して異なる出力を生成することを確認
+\end{itemize}
+
+実際の学習を行うためには、損失関数の計算、逆伝播アルゴリズム、最適化手法の実装が必要である。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{考察}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+LSTMの実装を通じて、再帰型ニューラルネットワークの複雑さと有用性を理解できた。特に、ゲート機構による情報の制御が時系列データの処理に重要な役割を果たすことが分かった。
+
+実装上の課題として、以下の点が挙げられる：
+\begin{itemize}
+\item 勾配の計算が複雑になる（時間方向への逆伝播が必要）
+\item パラメータ数が多く、適切な初期化が重要
+\item 長い系列では計算コストが高くなる
+\end{itemize}
+
+また、実用的な応用を考えると、適切な学習率、正則化、バッチ処理などの技術が必要になる。今回の実装は基本的な構造の理解に重点を置いたが、実際のプロジェクトではより洗練された実装が求められるだろう。
+
+LSTMのような複雑なモデルを一から実装することで、深層学習フレームワークの便利さも再認識できた。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{参考文献}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{enumerate}
+\item LSTMの実装（RNN・自然言語処理） \url{https://qiita.com/hara_tatsu/items/c3ba100e95e600846125}
+\item 機械学習の学習法 \url{https://qiita.com/hokkey621/items/404e04d6057b98128971}
+\item ニューラルネットワークの基礎 \url{https://tutorials.chainer.org/ja/13_Basics_of_Neural_Networks.html}
+\item LSTM and RNN Tutorial \url{https://github.com/omerbsezer/LSTM_RNN_Tutorials_with_Demo}
+\item [PyTorch]RNNを使った時系列予測 \url{https://qiita.com/kuk_a_i_ai/items/0ea4b93d767ce7c83145}
+\end{enumerate}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ここまで課題レポートの記述
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
