@@ -1,0 +1,24 @@
+create type sex_type as enum ('male', 'female', 'undetermin');
+create type score_grade as enum ('S', 'A', 'B', 'C', 'D');
+
+create table students (
+  std_id		char(8) 	primary key,
+  std_name		text,
+  sex			sex_type
+  );
+  
+create table courses (
+  crs_id		char(4) primary key,
+  crs_name		text,
+  crs_type		char(4),
+  credits		int
+);
+
+create table register (
+  reg_std	char(8) references students (std_id),
+  reg_crs	char(4) references courses (crs_id),
+  score		score_grade,
+  primary key 	(reg_std, reg_crs)
+);
+
+

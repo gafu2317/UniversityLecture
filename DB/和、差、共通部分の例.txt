@@ -1,0 +1,30 @@
+create table stdA (
+  std_id		char(8) 	primary key,
+  std_name		text
+  );
+create table stdB (
+  std_id		char(8) 	primary key,
+  std_name		text
+  );
+  
+insert into stdA values
+  ('12340001', 'yamada taro'),
+  ('12340002', 'suzuki hana'),
+  ('12340003', 'tanaka jiro');
+
+insert into stdB values
+  ('12340001', 'yamada taro'),
+  ('12340004', 'saito yoko' );
+
+-- 関係の内容を確認
+select * from stdA;
+select * from stdB;
+
+-- 2つの関係の和を問合せ
+(select * from stdA) union (select * from stdB);
+
+-- 2つの関係の差を問合せ
+(select * from stdA) except (select * from stdB);
+
+-- 2つの関係の共通部分を問合せ
+(select * from stdA) intersect (select * from stdB);

@@ -1,0 +1,45 @@
+create type sex_type as enum ('male', 'female', 'undetermin');
+create type score_grade as enum ('S', 'A', 'B', 'C', 'D');
+
+create table students (
+  std_id		char(8) 	primary key,
+  std_name		text,
+  sex			sex_type
+  );
+  
+create table courses (
+  crs_id		char(4) primary key,
+  crs_name		text,
+  crs_type		char(4),
+  credits		int
+);
+
+-- 以下のregisterは属性名をstudentと同一に変更済み
+create table register (
+  std_id	char(8) references students (std_id),
+  crs_id	char(4) references courses (crs_id),
+  score		score_grade,
+  primary key 	(std_id, crs_id)
+);
+
+insert into students values
+  ('12340001', 'yamada taro', 'male'),
+  ('12340002', 'suzuki hana', 'female'),
+  ('12340003', 'tanaka jiro', 'male');
+
+insert into courses values
+  ('4001', 'computer math', '0004', 2),
+  ('4002', 'database', '0004', 2);
+
+insert into register values
+  ('12340001', '4001', 'A'),
+  ('12340001', '4002', null),
+  ('12340002', '4001', 'S'),
+  ('12340002', '4002', 'B');
+
+
+-- 直積、射影、選択、自然結合の例
+select * from students cross join courses;
+select std_id, sex from students;
+select * from students where sex='male';
+select * from students natural join register;

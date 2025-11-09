@@ -1,0 +1,13 @@
+(1) studentsから女性の行を選択演算で取り出すSQLクエリー
+
+SELECT * FROM students WHERE sex = 'female';
+
+
+(2) registerから合格している履修の行を取り出す選択演算のSQLクエリー
+
+SELECT * FROM register WHERE score = 'S' OR score = 'A' OR score = 'B' OR score = 'C';
+
+
+(3) coursesとregisterを自然結合するSQLクエリー
+
+SELECT * FROM courses NATURAL JOIN register;
