@@ -64,7 +64,14 @@ class OnlineEnv:
         self.observation_space = Discrete((grid_width * grid_height) ** 2)
         self.action_space = Discrete(len(Action))
 
-        #TODO: 初期化処理
+        # グリッド環境の設定
+        self.grid_width = grid_width
+        self.grid_height = grid_height
+        self.life_range = life_range
+        self._agent_pos: Tuple[int, int] = (0, 0)
+        self._target_pos: Tuple[int, int] = (0, 0)
+        self._target_life: int = 0
+        self._step_count: int = 0
 
         # 乱数生成器
         self._rng: Optional[np.random.Generator] = None
@@ -79,27 +86,55 @@ class OnlineEnv:
         Returns: observation, info dict
         """
         self._rng, _ = seeding.np_random(seed)
-        pass #TODO: 環境の初期化（toio接続，りんご初期化，初期状態を返す）
+        await self._initialize_cubes()
+        self._step_count = 0
+        if not self._use_physical_target:
+            self._respawn_target()
+        observation = self.get_observation()
+        return observation, {}
 
     async def step(self, action: int) -> Tuple[int, float, bool, bool, Dict]:
         """
         Returns: observation, reward, terminated, truncated, info dict
         """
-        pass #TODO: 環境を1step進める
+        self._step_count += 1
+        self._target_life -= 1
+        dx, dy = {
+            Action.UP: (0, -1),
+            Action.DOWN: (0, 1),
+            Action.LEFT: (-1, 0),
+            Action.RIGHT: (1, 0),
+        }[Action(action)]
+        new_x = self._agent_pos[0] + dx
+        new_y = self._agent_pos[1] + dy
+        if 0 <= new_x < self.grid_width and 0 <= new_y < self.grid_height:
+            mat_x, mat_y = self.pos_to_matcell((new_x, new_y))
+            await self.cubes[0].move_to_the_grid_cell(
+                cell_x=mat_x, cell_y=mat_y, speed=100
+            )
+        reward = self.get_reward()
+        if not self._use_physical_target and self._target_life <= 0:
+            self._respawn_target()
+        observation = self.get_observation()
+        return observation, reward, False, False, {}
 
     def get_observation(self) -> int:
-        pass #TODO: 状態の取得
+        agent_idx = self.pos_to_index(self._agent_pos)
+        target_idx = self.pos_to_index(self._target_pos)
+        # 観察空間は (agent_position, target_position) の組み合わせ
+        observation = agent_idx * (self.grid_width * self.grid_height) + target_idx
+        return observation
 
     def get_reward(self) -> float:
-        pass #TODO: 報酬の取得
+        return 1.0 if self._agent_pos == self._target_pos else 0.0
 
     # ----- utility methods -----
 
     def pos_to_index(self, xy: Tuple[int, int]) -> int:
-        pass #TODO: 座標(x,y)から状態indexへの変換
+        return xy[1] * self.grid_width + xy[0]
 
     def index_to_pos(self, idx: int) -> Tuple[int, int]:
-        pass #TODO: 状態indexから座標(x,y)への変換
+        return idx % self.grid_width, idx // self.grid_width
 
     def pos_to_matcell(self, xy: Tuple[int, int]) -> Tuple[int, int]:
         """Convert grid coordinate to Toio mat cell coordinate."""
@@ -201,6 +236,24 @@ async def test_with_keyboard():
         Key.LEFT.value: Action.LEFT,
     }
     #TODO: メインループ（環境を初期化，矢印キーの方向へ環境を動かして，状態を表示）
+    toio_id = ""
+    env = OnlineEnv(agent_name=toio_id)
+    try:
+        await env.reset()
+        env.render()
+        for i in range(1, 1001):
+            action = await read_action_async(mapping)
+            if action is None:
+                print("Exiting.")
+                break
+        obs, reward, *_ = await env.step(action.value)
+        print(f"Step:{i} Obs:{obs} Rwd:{reward}")
+        env.render()
+        await asyncio.sleep(1.0)
+    except KeyboardInterrupt:
+        print("Interrupted. Exiting.")
+    finally:
+        await env.close()
 
 
 if __name__ == "__main__":

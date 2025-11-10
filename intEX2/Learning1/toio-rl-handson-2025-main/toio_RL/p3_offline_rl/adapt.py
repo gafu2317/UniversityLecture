@@ -34,3 +34,12 @@ async def test_agent(
 
 if __name__ == "__main__":
     #TODO: 学習済みQを読み込んでオンライン環境に適用
+    toio_id1 = ""
+    toio_id2 = ""
+    env = OnlineEnv(agent_name=toio_id1, target_name=toio_id2)
+    agent = QTableAgent(
+        env.observation_space,
+        env.action_space,
+    )
+    agent.load_q("test_q.npy")
+    asyncio.run(test_agent(env, agent, q_plot_interval=1))

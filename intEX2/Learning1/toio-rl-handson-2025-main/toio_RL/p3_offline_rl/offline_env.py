@@ -48,7 +48,16 @@ class OfflineEnv:
         """
         Returns: observation, info dict
         """
-        pass #TODO: 環境の初期化（オフライン向け）
+        #TODO: 環境の初期化（オフライン向け）
+        self._rng, _ = seeding.np_random(seed)
+        self._step_count = 0
+        self._agent_pos = (
+            self._rng.integers(0, self.grid_width),
+            self._rng.integers(0, self.grid_height),
+        )
+        self._respawn_target()
+        observation = self.get_observation()
+        return observation, {}
 
     def step(self, action: int) -> Tuple[int, float, bool, bool, Dict]:
         """
@@ -66,7 +75,12 @@ class OfflineEnv:
 
         new_x = self._agent_pos[0] + dx
         new_y = self._agent_pos[1] + dy
-        pass #TODO: オフライン環境の更新
+        #TODO: オフライン環境の更新
+        if 0 <= new_x < self.grid_width and 0 <= new_y < self.grid_height:
+            self._agent_pos = (new_x, new_y)
+        reward = self.get_reward()
+        if self._target_life <= 0 or self._agent_pos == self._target_pos:
+            self._respawn_target()
 
         observation = self.get_observation()
         return observation, reward, False, False, {}
@@ -138,6 +152,18 @@ def test_with_keyboard() -> None:
         Key.LEFT.value: Action.LEFT,
     }
     #TODO: メインループ（仮想環境向け）
+    env = OfflineEnv()
+    obs, _ = env.reset()
+    print(f"Initial Observation: {obs}")
+    env.render()
+    for i in range(1, 1001):
+        action = read_action(mapping)
+        if action is None:
+            break
+        obs, reward, *_ = env.step(action)
+        print(f"Step: {i} Obs: {obs} Rwd: {reward}")
+        env.render()
+    env.close()
 
 
 if __name__ == "__main__":
