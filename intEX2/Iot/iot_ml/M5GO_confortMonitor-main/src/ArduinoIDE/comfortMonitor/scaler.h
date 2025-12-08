@@ -1,0 +1,15 @@
+#ifndef SCALER_H_
+#define SCALER_N_
+
+// 自動生成された標準化パラメータ
+
+#define MEAN_TEMPERATURE 24.522704
+#define STD_TEMPERATURE 3.853808
+
+#define MEAN_HUMIDITY 51.765008
+#define STD_HUMIDITY 8.115132
+
+#define MEAN_PRESSURE 1012.725332
+#define STD_PRESSURE 2.281945
+
+#endif  // SCALER_H_
